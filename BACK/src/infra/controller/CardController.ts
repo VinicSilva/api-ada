@@ -24,7 +24,8 @@ export default class CardController {
 
 		http.route("post", "/cards", async function (params: any, body: any) {
 			const cardService = new CardService(cardRepository);
-			const card = await cardService.create(body);
+			const card: any = await cardService.create(body);
+			card.statusCode = 201;
 			return card;
 		});
 

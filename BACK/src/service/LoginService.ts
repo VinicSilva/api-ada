@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken';
 
 export default class LoginService {
 	async auth(body: any): Promise<any> {
-        const { login, password } = body;
-        if(login === config.login && password === config.password){
+        const { login, senha } = body;
+        if(login === config.login && senha === config.password){
             const id = `${config.login}_${config.password}`;
             const secret: any = config.secret;
             const token = jwt.sign({ id }, secret, {
-                expiresIn: 300 // expires in 5 min
+                expiresIn: 1500 // expires in 15 min
             });
             return token;
         }

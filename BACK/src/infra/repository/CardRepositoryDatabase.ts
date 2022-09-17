@@ -18,6 +18,7 @@ export default class CardRepositoryDatabase implements CardRepository {
 
     async findOne(cardId: number): Promise<Card> {
         const [cardData] = await this.connection.query("select * from ada.card WHERE id = $1", [cardId]);
+        if (!cardData) return null;
 		const card: Card = new Card(cardData.titulo, cardData.conteudo, cardData.lista, cardData.id);
 		return card;
     }

@@ -1,20 +1,14 @@
 import Http from "./Http";
 import express, { Request, Response } from "express";
+import cors from 'cors';
 
 export default class ExpressAdapter implements Http {
 	app: any;
 
 	constructor () {
 		this.app = express();
-		this.app.use(express.json())
-		this.app.use(function (req: any, res: any, next: any) {
-			//log middle
-			res.header("Access-Control-Allow-Origin", "*");
-			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-			res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-			
-			next();
-		});
+		this.app.use(express.json());
+		this.app.use(cors());
 	}
 
 	route(method: string, url: string, callback: Function): void {
