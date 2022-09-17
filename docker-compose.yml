@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  ada-postgres:
+    image: postgres:alpine
+    container_name: ada-postgres
+    volumes:
+      - ada-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      - POSTGRES_DB:postgres
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:Postgres2022
+
+  # ada-back:
+  #   build: ./BACK
+  #   container_name: ada-app
+  #   environment:
+  #     - DB_SERVER=kanban-postgres
+  #   volumes:
+  #     - ./BACK/src:/app/back/src
+  #     - /app/back/src/node_modules
+  #   ports:
+  #     - 5001:5001
+  #   depends_on:
+  #     - ada-postgres
+
+  ada-front:
+    container_name: ada-front
+    build: 
+        context: ./FRONT
+        dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - ./FRONT:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true  
+    stdin_open: true  
+    depends_on:
+      - ada-postgres
+
+volumes:
+  ada-data:
