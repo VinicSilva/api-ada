@@ -8,10 +8,10 @@ export default class LoginService {
             const id = `${config.login}_${config.password}`;
             const secret: any = config.secret;
             const token = jwt.sign({ id }, secret, {
-                expiresIn: 300 // expires in 5min
+                expiresIn: 300 // expires in 5 min
             });
             return token;
         }
-        return null;
+        return { statusCode: 401, message: 'Invalid login!' };
 	}
 }

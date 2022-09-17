@@ -1,3 +1,4 @@
+import { verifyJWT } from "../../helper";
 import CardRepository from "../../domain/repository/CardRepository";
 import CardService from "../../service/CardService";
 import Connection from "../database/Connection";
@@ -7,6 +8,8 @@ import CardRepositoryDatabase from "../repository/CardRepositoryDatabase";
 export default class CardController {
 
 	constructor (readonly http: Http, readonly connection: Connection, readonly cardRepository: CardRepository) {
+        http.use('/cards', verifyJWT)
+
 		http.route("get", "/cards", async function (_params: any, _body: any) {
 			const cardService = new CardService(cardRepository);
 			const cards = await cardService.getCards();

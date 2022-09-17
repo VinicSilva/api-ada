@@ -9,8 +9,8 @@ const cardRepository = new CardRepositoryDatabase(connection);
 const http = new ExpressAdapter();
 new LoginController(http);
 new CardController(http, connection, cardRepository);
-
-http.listen(5001);
+const port = 5001;
+http.listen(port);
 
 process.on("exit", async function () {
 	await connection.close();

@@ -6,22 +6,28 @@ export default class ExpressAdapter implements Http {
 
 	constructor () {
 		this.app = express();
+		this.app.use(express.json())
 		this.app.use(function (req: any, res: any, next: any) {
-			console.log("LOGGER MiD")
-			console.log(req.body)
+			//log middle
 			res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 			res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+			
 			next();
 		});
 	}
 
 	route(method: string, url: string, callback: Function): void {
 		this.app[method](url, async function (req: Request, res: Response) {
-			console.log(req.body)
 			const output = await callback(req.params, req.body);
-			res.json(output);
+			const statusCode = output.statusCode || 200;
+			delete output.statusCode;
+			res.status(statusCode).json(output);
 		});
+	}
+
+	use(url: string, callback: Function): void {
+		this.app.use(url, callback);
 	}
 
 	listen(port: number): void {
