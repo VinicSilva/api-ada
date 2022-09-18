@@ -13,5 +13,11 @@ down:
 logs:
 	docker-compose logs -f
 
+test-watch:
+	docker-compose exec ada-back ./node_modules/.bin/jest --watch
+
+test:
+	docker-compose exec ada-back ./node_modules/.bin/jest --coverage --passWithNoTests --noStackTrace --runInBand --forceExit --detectOpenHandles
+
 cov:
-	docker-compose exec ada-back npm run test:cov
+	docker-compose exec ada-back ./node_modules/.bin/jest --coverage --passWithNoTests --noStackTrace --runInBand --forceExit --detectOpenHandles
