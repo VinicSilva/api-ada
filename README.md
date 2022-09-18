@@ -12,6 +12,12 @@ make up
 make logs
 ```
 
+### To run the tests, run the command bellow:
+
+```
+make test
+```
+
 ### To see the website, to access the url bellow on the browser:
 
 ```

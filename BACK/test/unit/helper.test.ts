@@ -12,7 +12,7 @@ const mockResponse: any = () => {
 };
 
 describe('helper.ts', () => {
-    test('Deve retornar um erro ao não informar o token JWT.', async () => {
+    test('Should return an error when not reporting the JWT token.', async () => {
         const req = mockRequest();
         const res = mockResponse();
         await verifyJWT(req, res, () => false);
@@ -20,7 +20,7 @@ describe('helper.ts', () => {
         expect(res.json).toHaveBeenCalledWith({ message: 'No token provided.' });
     });
     
-    test('Deve retornar um erro de token JWT inválido.', async () => {
+    test('Should return an invalid JWT token error.', async () => {
         const req = mockRequest({
             headers: { authorization: 'Bearer any_token' }
         });
@@ -30,7 +30,7 @@ describe('helper.ts', () => {
         expect(res.json).toHaveBeenCalledWith({ message: 'Failed to authenticate token.' });
     });
 
-    test('Deve entender como válido o token JWT.', async () => {
+    test('Should understand how valid the JWT token.', async () => {
         const req = mockRequest({
             headers: { authorization: 'Bearer any_valid_token' }
         });
