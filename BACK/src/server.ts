@@ -9,7 +9,7 @@ const cardRepository = new CardRepositoryDatabase(connection);
 const http = new ExpressAdapter();
 new LoginController(http);
 new CardController(http, connection, cardRepository);
-const port = 5001;
+const port = 5000;
 http.listen(port);
 
 process.on("exit", async function () {

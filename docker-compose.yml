@@ -2,30 +2,31 @@ version: '3'
 
 services:
   ada-postgres:
-    image: postgres:alpine
     container_name: ada-postgres
-    volumes:
-      - ada-data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+    image: postgres:alpine
     restart: always
     environment:
-      - POSTGRES_DB:postgres
-      - POSTGRES_USER:postgres
-      - POSTGRES_PASSWORD:Postgres2022
+      POSTGRES_DB: 'postgres'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'Postgres2022'
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./BACK/db.sql:/docker-entrypoint-initdb.d/db.sql
 
-  # ada-back:
-  #   build: ./BACK
-  #   container_name: ada-app
-  #   environment:
-  #     - DB_SERVER=kanban-postgres
-  #   volumes:
-  #     - ./BACK/src:/app/back/src
-  #     - /app/back/src/node_modules
-  #   ports:
-  #     - 5001:5001
-  #   depends_on:
-  #     - ada-postgres
+  ada-back:
+    build: 
+        context: ./BACK
+        dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    container_name: ada-back
+    volumes:
+      - ./BACK:/app/back
+      - /app/back/node_modules
+    depends_on:
+      - ada-postgres
 
   ada-front:
     container_name: ada-front
@@ -41,7 +42,7 @@ services:
       - CHOKIDAR_USEPOLLING=true  
     stdin_open: true  
     depends_on:
-      - ada-postgres
+      - ada-back
 
 volumes:
-  ada-data:
+  pgdata:

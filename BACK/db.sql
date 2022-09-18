@@ -1,5 +1,3 @@
-create database app;
-
 create schema ada;
 
 create table ada.card (
