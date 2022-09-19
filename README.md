@@ -3,8 +3,10 @@
 ### Run the command bellow to run project:
 
 ```
-make up
+make init
 ```
+
+- Remember to change the .env with the right credentials to use the endpoints.
 
 ### To see the application logs, run the command bellow:
 
