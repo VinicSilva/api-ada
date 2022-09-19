@@ -1,3 +1,7 @@
+init:
+	cp BACK/.env.example BACK/.env
+	docker-compose up -d
+
 up:
 	docker-compose up -d
 

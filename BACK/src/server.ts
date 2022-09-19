@@ -1,3 +1,4 @@
+import { config } from './config';
 import CardController from "./infra/controller/CardController";
 import LoginController from "./infra/controller/LoginController";
 import PgPromiseConnection from "./infra/database/PgPromiseConnection";
@@ -9,7 +10,7 @@ const cardRepository = new CardRepositoryDatabase(connection);
 const http = new ExpressAdapter();
 new LoginController(http);
 new CardController(http, connection, cardRepository);
-const port = 5000;
+const port = config.port;
 http.listen(port);
 
 process.on("exit", async function () {
